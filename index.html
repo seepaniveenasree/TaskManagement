@@ -1,0 +1,133 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management - Home</title>
+  <style>
+    body {
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxmlwNgcsOaunihInXvfPI3HOIW4ZRKtU8Bw&s');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+    }
+
+    .main-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      padding: 40px;
+    }
+
+    .left {
+      flex: 1;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+    }
+
+    .left h1 {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .left h3 {
+      color: #16a085;
+      margin-bottom: 20px;
+    }
+
+    .left ul {
+      list-style: none;
+      padding-left: 0;
+      line-height: 1.6;
+    }
+
+    .left ul li::before {
+      content: "→ ";
+      color: #2980b9;
+    }
+
+    .left blockquote {
+      font-style: italic;
+      color: #555;
+      border-left: 4px solid #ccc;
+      padding-left: 15px;
+      margin-top: 20px;
+    }
+
+    .right {
+      flex: 1;
+      text-align: center;
+    }
+
+    .right img {
+      max-width:100%;
+      height: auto;
+      border-radius: 10px;
+         }
+
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+      }
+
+      .left, .right {
+        max-width: 100%;
+        margin-bottom: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>TASK MANAGEMENT</h2>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <div class="main-content">
+    <div class="left">
+      <h1>Welcome to TaskMaster – Your Personal Task Management Assistant</h1>
+      <h3>Stay organized. Stay productive. Stay in control.</h3>
+      <p>TaskMaster is a simple and efficient task management system designed to help you track, manage, and complete your daily tasks with ease. Whether you’re a student, a professional, or someone juggling multiple responsibilities, TaskMaster helps you:</p>
+      <ul>
+        <li>Create and manage your tasks with deadlines</li>
+        <li>Edit or delete tasks anytime</li>
+        <li>Track your progress in real-time</li>
+      </ul>
+      <blockquote>“A goal without a plan is just a wish.” – Make your goals happen with TaskMaster</blockquote>
+    </div>
+    <div class="right">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGQUwPRkb3qXd5AqQXUiV_NH2Pj8P1wzthhHlpKdSnM_f_MtbJPxaK-J1MYV1QIKuSx2Y&usqp=CAU" alt="Task Image">
+    </div>
+  </div>
+</body>
+</html>

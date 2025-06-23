@@ -1,0 +1,143 @@
+<!-- task.html (Task Dashboard) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Tasks</title>
+  <style>
+    body {
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6sik5yE0j0Zzv00CUTUnC9zT0ii28KZWFR_aeN-H0WgwwDA5XjmGpX4LbMmkF7fD9Cek&usqp=CAU');
+      background-size:100%;
+      font-family: Arial;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    .tick {
+      font-size: 20px;
+    }
+    .tick.green {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <header><h2>Task Dashboard</h2></header>
+  <div class="container">
+    <h3>Add / Update Task</h3>
+    <input type="hidden" id="taskId">
+    <input type="text" id="title" placeholder="Task Title">
+    <select id="status">
+      <option value="to-do">To-Do</option>
+      <option value="progress">In Progress</option>
+      <option value="completed">Completed</option>
+    </select>
+    <input type="date" id="dueDate">
+    <button onclick="saveTask()">Save Task</button>
+
+    <h3>My Tasks</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Title</th><th>Status</th><th>Due Date</th><th>✔</th></tr>
+      </thead>
+      <tbody id="taskTable"></tbody>
+    </table>
+  </div>
+  <script>
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    function saveTask() {
+      const taskId = document.getElementById('taskId').value;
+      const title = document.getElementById('title').value;
+      const status = document.getElementById('status').value;
+      const dueDate = document.getElementById('dueDate').value;
+
+      const payload = {
+        userId: user.id,
+        title,
+        status,
+        dueDate
+      };
+
+      let url = 'http://localhost:8080/task/add';
+      let method = 'POST';
+
+      if (taskId) {
+        payload.id = taskId;
+        url = 'http://localhost:8080/task/update';
+        method = 'PUT';
+      }
+
+      fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        document.getElementById('taskId').value = '';
+        document.getElementById('title').value = '';
+        document.getElementById('status').value = 'to-do';
+        document.getElementById('dueDate').value = '';
+        loadTasks();
+      });
+    }
+
+    function editTask(id, title, status, dueDate) {
+      document.getElementById('taskId').value = id;
+      document.getElementById('title').value = title;
+      document.getElementById('status').value = status;
+      document.getElementById('dueDate').value = dueDate;
+    }
+
+    function loadTasks() {
+      fetch('http://localhost:8080/task/get/' + user.id)
+      .then(res => res.json())
+      .then(tasks => {
+        const table = document.getElementById('taskTable');
+        table.innerHTML = '';
+        tasks.forEach(t => {
+          const tickClass = t.status === 'completed' ? 'tick green' : 'tick';
+          const row = `
+            <tr onclick="editTask('${t.id}', '${t.title}', '${t.status}', '${t.dueDate}')">
+              <td>${t.id}</td>
+              <td>${t.title}</td>
+              <td>${t.status}</td>
+              <td>${t.dueDate}</td>
+              <td class="${tickClass}">✔</td>
+            </tr>`;
+          table.innerHTML += row;
+        });
+      });
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>
